@@ -1,6 +1,9 @@
 class RulesController < ApplicationController
 	def index
 		@rules=Rule.all
+		if not(@rules)
+				redirect_to new_rule_path
+			end
 	end
 	def show
 		id = params[:id] # retrieve rule ID from route
@@ -10,7 +13,9 @@ class RulesController < ApplicationController
 	def new
 		#default: render 'new' template
 		id = params[:parent_id]
-		@parent = Rule.find(id)
+		if id
+			@parent = Rule.find(id)
+		end
 		@rule= Rule.new(:parent_id => id)
 	end
 	def create

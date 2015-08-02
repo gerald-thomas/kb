@@ -1,5 +1,7 @@
 %h1 Create New Child Rule
-%h2 Parent: #{@parent.name}
+/ %h2 Parent: 
+/ 	= if @parent  @parent.name
+
 = form_tag rules_path, :method => :post do
 	=hidden_field :rule, :parent_id
 	=label :rule , :name, 'Rule Name'
