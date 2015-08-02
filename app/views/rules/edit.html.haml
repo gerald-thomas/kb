@@ -1,0 +1,20 @@
+%h1 Edit Rule
+%h2 Rule: #{@rule.name}
+= form_tag rule_path(@rule), :method => :put do
+
+	=label :rule , :parent_id, 'Parent'
+	=text_field  :rule, :parent_id
+
+	=label :rule , :name, 'Rule Name'
+	=text_field  :rule, :name
+
+	=label :rule, :test, "Test"
+	=text_field  :rule, :test
+
+	=label :rule, :excel, "Excel File"
+	=text_field  :rule, :excel
+
+	=label :rule, :branch, "Branch"
+	=check_box_tag :branch, @rule.branch, @rule.branch
+
+	=submit_tag 'Save Changes'

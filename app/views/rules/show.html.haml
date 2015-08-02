@@ -1,0 +1,26 @@
+%h2 Details about: #{@rule.name}
+ 
+%ul#details
+	%li
+		Branch:
+		= @rule.branch
+	%li
+		Excel File:
+		= @rule.excel
+ 
+	%li
+		Test:
+		= @rule.test
+
+ 
+%h3 Manage rule
+ 
+%li 
+	= link_to 'Edit rule', edit_rule_path(@rule)
+
+%li
+	=link_to 'Delete rule', rule_path(@rule), :method => :delete
+
+%li 
+	= link_to 'Back to rule list', rules_path
+

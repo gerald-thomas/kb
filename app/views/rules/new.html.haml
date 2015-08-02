@@ -1,0 +1,17 @@
+%h1 Create New Child Rule
+%h2 Parent: #{@parent.name}
+= form_tag rules_path, :method => :post do
+	=hidden_field :rule, :parent_id
+	=label :rule , :name, 'Rule Name'
+	=text_field  :rule, :name
+
+	=label :rule, :test, "Test"
+	=text_field  :rule, :test
+
+	=label :rule, :excel, "Excel File"
+	=text_field  :rule, :excel
+
+	=label :rule, :branch, "Branch"
+	=check_box_tag :branch 
+
+	=submit_tag 'Save Rule'

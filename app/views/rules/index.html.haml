@@ -1,0 +1,40 @@
+-#  This file is app/views/rules/index.html.haml
+/ %h2 All Rules
+
+/ @rules.each do |rule|
+/   %li= 'Name: ' + @rule.name
+/     %ul#details
+/       %li
+/         Branch:
+/         = @rule.branch
+/       %li
+/         Excel File:
+/         = @rule.excel
+/       %li
+/         Test:
+/         = @rule.test
+/       %li#actions
+/         = link_to "Add Branch" new_rule_path(:parent_id => rule)
+/         = link_to "Delete Rule" message, :confirm => "Are you sure?", :method => :delete
+
+
+%table#rules
+  %thead
+    %tr
+      %th Rule Name
+      %th Branch
+      %th More Info
+      %th Add child
+      / %th Excel File
+      / %th Test
+      / %th More Info
+
+  %tbody
+    - @rules.each do |rule|
+      %tr
+        %td= rule.name 
+        %td= rule.branch
+        / %td= rule.excel
+        / %td= rule.test
+        %td= link_to "Look up #{rule.name}", rule_path(rule)
+        %td= link_to 'Add child rule', new_rule_path(:parent_id => rule)
