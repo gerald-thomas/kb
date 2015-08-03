@@ -1,26 +1,18 @@
 %h2 Details about: #{@rule.name}
- 
-%ul#details
-	%li
-		Branch:
-		= @rule.branch
-	%li
-		Excel File:
-		= @rule.excel
- 
-	%li
-		Test:
-		= @rule.test
 
- 
-%h3 Manage rule
- 
-%li 
-	= link_to 'Edit rule', edit_rule_path(@rule)
+- if @rule.parent
+    %h3= link_to "Parent", rule_path(@rule.parent) 
+    = @rule.parent.name
 
-%li
-	=link_to 'Delete rule', rule_path(@rule), :method => :delete
+    = render :partial => 'rules' , :object => @rule.parent
 
-%li 
-	= link_to 'Back to rule list', rules_path
 
+%h3 This rule: #{@rule.name}
+= render :partial => 'rules', :object => @rule
+
+
+- @children = @rule.children
+- if @children
+    %h3 Child rules
+    - @children.each do |child|
+        = render :partial => 'rules', :object => child

@@ -1,7 +1,9 @@
--#  This file is app/views/rules/index.html.haml
+/#  This file is app/views/rules/index.html.haml
 / %h2 All Rules
 
-/ @rules.each do |rule|
+/- @rules.each do |rule|
+/     %h5 Details about: #{rule.name}
+/=render :partial => 'rules', :collection => @rules
 /   %li= 'Name: ' + @rule.name
 /     %ul#details
 /       %li
