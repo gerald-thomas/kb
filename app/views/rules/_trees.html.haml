@@ -1,22 +1,13 @@
 %table#rules
   %thead
     %tr
-      - if trees.parent
-        %th= link_to "#{trees.name}", tree_path(trees.parent)
-      - else
-        %th= trees.name
-      / %th Parent Branch
-      / %th Excel File
-      / %th Test
-      / %th More Info
+      / - if trees.parent
+      /   %th= link_to "#{trees.name}", tree_path(trees.parent)
+      / - else
+      /   %th= trees.name
+      %th= link_to "#{trees.name}", tree_path(trees)
 
   %tbody
-
-    / %tr
-    /   %td= trees.name 
-    /   %td= trees.branch
-    /   %td= trees.excel
-    /   %td= trees.test
     %tr
       %td
         = link_to 'Children', tree_path(trees)
