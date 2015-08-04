@@ -1,0 +1,28 @@
+%table#rules
+  %thead
+    %tr
+      - if trees.parent
+        %th= link_to "#{trees.name}", tree_path(trees.parent)
+      - else
+        %th= trees.name
+      / %th Parent Branch
+      / %th Excel File
+      / %th Test
+      / %th More Info
+
+  %tbody
+
+    / %tr
+    /   %td= trees.name 
+    /   %td= trees.branch
+    /   %td= trees.excel
+    /   %td= trees.test
+    %tr
+      %td
+        = link_to 'Children', tree_path(trees)
+        |
+        = link_to 'Edit', edit_rule_path(trees)
+        |
+        =link_to 'Delete', trees , :confirm => "Are you sure?", :method => :delete
+        |
+        = link_to 'Add child', new_rule_path(:parent_id => trees)

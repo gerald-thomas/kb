@@ -46,6 +46,15 @@ class RulesController < ApplicationController
 		flash[:notice] = "Rule: '#{@rule.name}' deleted"
 		redirect_to rules_path
 	end
+	def tree
+		id = params[:id] # retrieve rule ID from route
+		if id
+			@rule = Rule.find(id)  #look up rule by unique ID
+		else
+			@rule = Rule.find(1)  #look up rule by unique ID
+		end
+	end
+
 
 	private
 
