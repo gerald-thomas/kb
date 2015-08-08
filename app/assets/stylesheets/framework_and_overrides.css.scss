@@ -46,3 +46,37 @@ section {
   @extend .row;
   margin-top: 20px;
   }
+
+* {margin: 0; padding: 0;}
+.tree ul {
+  padding-top: 50px; 
+  position: relative;
+  }
+
+.tree li {float: left; 
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0 5px;
+}
+
+.tree li::before,  .tree li::after{
+  content: '';
+  position: absolute; top:0; right:50%;
+  border-top: 1px solid #ccc;
+  width: 50%; height: 20px;
+}
+
+.tree li a{
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #666;
+  font-family: arial, verdana, tahoma;
+  font-size: 11px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+
+}
+

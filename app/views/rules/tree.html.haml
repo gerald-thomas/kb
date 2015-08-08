@@ -1,19 +1,22 @@
 %h2 Details about: #{@rule.name}
 
-- if @rule.parent
-    %h3 Parent:
-    = link_to "#{@rule.parent.name}", tree_path(@rule.parent) 
-    /= @rule.parent.name
+/ - if @rule.parent
+/ 	%h3 Parent:
+/ 	= link_to "#{@rule.parent.name}", tree_path(@rule.parent) 
+/ 	/= @rule.parent.name
 
-    /= render :partial => 'trees' , :object => @rule.parent
-
-
-%h3 This rule: #{@rule.name}
-= render :partial => 'trees', :object => @rule
+/ 	/= render :partial => 'trees' , :object => @rule.parent
 
 
-- @children = @rule.children
-- if @children
-    %h3 Child rules
-    - @children.each do |child|
-        = render :partial => 'trees', :object => child
+/ %h3 This rule: #{@rule.name}
+/ = render :partial => 'trees', :object => @rule
+
+
+/ - @children = @rule.children
+/ - if @children
+/ 	%h3 Child rules
+/ 	%ul
+/ 		- @children.each do |child|
+/ 			%li= render :partial => 'trees', :object => child
+%h2 Tree View
+.tree= render :partial => 'drawtree', :object => @rule

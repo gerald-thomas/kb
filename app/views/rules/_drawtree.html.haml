@@ -1,0 +1,7 @@
+-if drawtree
+	/ = render :partial => 'trees', :object => drawtree
+	/%ul
+	%li= link_to "#{drawtree.name}", tree_path(drawtree)
+	-if drawtree.children
+		-if render :partial =>'drawtree', :collection => drawtree.children
+			%ul= render :partial =>'drawtree', :collection => drawtree.children

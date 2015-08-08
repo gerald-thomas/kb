@@ -1,0 +1,20 @@
+%table#rules
+  %thead
+    %tr
+      %th Rule Name
+      %th Parent Branch
+      %th Excel File
+      %th Test
+      / %th More Info
+
+  %tbody
+
+    %tr
+      %td= @rule.name 
+      %td= @rule.branch
+      %td= @rule.excel
+      %td= @rule.test
+    %tr
+      %td= link_to 'Edit rule', edit_rule_path(@rule)
+      %td=link_to 'Delete rule', @rule , :confirm => "Are you sure?", :method => :delete
+      %td= link_to 'Add child rule', new_rule_path(:parent_id => @rule)
