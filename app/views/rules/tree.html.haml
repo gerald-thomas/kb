@@ -19,4 +19,5 @@
 / 		- @children.each do |child|
 / 			%li= render :partial => 'trees', :object => child
 %h2 Tree View
-.tree= render :partial => 'drawtree', :object => @rule
+.tree
+	%ul= render :partial => 'drawtree', :object => @rule
