@@ -37,7 +37,11 @@ class RulesController < ApplicationController
 		@rule = Rule.find id
 		@rule.update_attributes!(rule_params)
 		flash[:notice]  ="#{@rule.name} was successfully updated"
-		redirect_to rules_path
+		if @rule.parent
+			redirect_to tree_path(@rule.parent)
+		else
+			redirect_to tree_path(@rule)
+		end
 	end
 	def destroy
 		id = params[:id] # retrieve rule ID from route

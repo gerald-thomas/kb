@@ -10,9 +10,9 @@
   %tbody
     %tr
       %td
-        = link_to 'Children', tree_path(trees)
-        |
-        = link_to 'Edit', edit_rule_path(trees)
+        / = link_to 'Children', tree_path(trees)
+        / |
+        =link= link_to 'Edit', edit_rule_path(trees)
         |
         =link_to 'Delete', trees , :confirm => "Are you sure?", :method => :delete
         |

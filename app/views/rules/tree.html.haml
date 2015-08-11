@@ -20,4 +20,8 @@
 / 			%li= render :partial => 'trees', :object => child
 %h2 Tree View
 .tree
-	%ul= render :partial => 'drawtree', :object => @rule
+	-if @rule.parent
+		%ul= render :partial => 'drawtree', :object => @rule.parent
+	-else
+		%ul= render :partial => 'drawtree', :object => @rule
+
