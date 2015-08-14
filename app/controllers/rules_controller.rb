@@ -59,6 +59,15 @@ class RulesController < ApplicationController
 		end
 	end
 
+	def run
+		id = params[:id] # retrieve rule ID from route
+		@rule = Rule.find(id)  #look up rule by unique ID
+		#book = Spreadsheet.open @rule.excel
+		#book= Documents::XlsBuilder.read_file @rule.excel
+		flash[:notice] = "'#{@rule.excel}' successfully opened"
+		redirect_to tree_path(@rule)
+	end
+
 
 	private
 

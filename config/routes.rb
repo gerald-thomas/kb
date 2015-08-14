@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   	root to: 'rules#index'
   	get '/rules/tree/:id', to: 'rules#tree', as:  :tree
   	get ':controller/:action/:id'
+  	get '/rules/run/:id', to: 'rules#run', as:  :run
 
 end
