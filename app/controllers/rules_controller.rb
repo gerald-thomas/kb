@@ -60,12 +60,63 @@ class RulesController < ApplicationController
 	end
 
 	def run
+
 		id = params[:id] # retrieve rule ID from route
 		@rule = Rule.find(id)  #look up rule by unique ID
 		#book = Spreadsheet.open @rule.excel
-		#book= Documents::XlsBuilder.read_file @rule.excel
+		book= Documents::XlsBuilder::read_file @rule.excel
+		data_sheet = book.worksheet("Data")
+		data_title_row = data_sheet.row(0)
+		eval_sheet = book.worksheet("Tests")
+		eval_title_row = eval_sheet.row(0)		
 		flash[:notice] = "'#{@rule.excel}' successfully opened"
+		run_tickets = Ticket.take(2)   # eventually should be set by user
+		run_tickets.each do |tix|
+			# col_number = 0
+			# #tix #so that it is in scope in the outer do loop
+			# data_title_row.each do |col|
+			# 	#data_sheet [1,col_number] = tix[col]  #kludgy way to download data
+			# 	eval_sheet [1,col_number] = tix[col]  #kludgy way to download data
+			# 	col_number += 1
+			# end
+			# # Excel calculates values and results are in Tests worksheet
+			# # store results with Ticket
+			# col_number = 0
+			# byebug
+			# eval_title_row.each do |col|
+			# 	if eval_sheet [1,col_number]  #kludgy way to upload data
+
+			# 		tix[col] = true
+			# 	else
+			# 		tix[col] = false
+			# 	end
+			# 	col_number += 1
+			# end
+			#flash[:notice] = "Was here"
+			# now clasify ticket
+			#@rule_eval = tix[@rule.test]  #tix goes down the True or False branch
+			# find the branch corresponding to the evaluation
+			classification = classify(tix, @rule)
+			tix.branch =classification[:branch]
+			tix.rule = classification[:rule]
+			tix.save
+			
+		end
+
+
+			
+		#byebug
 		redirect_to tree_path(@rule)
+	end
+
+	def classify (tix, test_rule)
+		rule_eval = tix[test_rule.test] #evaluates to true or false
+		child_rule = test_rule.children.where( :branch => rule_eval).first #.first to get to actual rule rather than a Relation see http://stackoverflow.com/questions/4426441/rails-3-active-record-query-returns-activerecordrelation-object-instead-of-o
+		if child_rule
+			classification = classify(tix,child_rule)
+		else
+			{:branch=> rule_eval, :rule => test_rule.id}
+		end
 	end
 
 
@@ -74,5 +125,8 @@ class RulesController < ApplicationController
 	def rule_params
 		params.require(:rule).permit(:parent_id, :name, :test, :excel, :branch)
 	end
+
+
+
 
 end

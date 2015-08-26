@@ -6,6 +6,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+#config.autoload_paths += %W(#{config.root}/lib)
+#require 'spreadsheet'
+
 module Kb
   class Application < Rails::Application
 
@@ -34,6 +37,8 @@ module Kb
 
     # For Foundation 5
     config.assets.precompile += %w( vendor/modernizr )
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/app/builders/documents)
 
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
