@@ -1,4 +1,18 @@
 %h1 Ticket Classification Buckets
+%h3 Totals
+%table#rules
+  %thead
+    %tr
+      %th Branch
+      %th Count
+
+  %tbody
+    - @buckets_total.each do |bucket|
+      %tr
+        %td= bucket.branch
+        %td= bucket.count
+%h3 Bucket totals
+
 %table#rules
   %thead
     %tr
@@ -13,8 +27,8 @@
         %td= bucket.rule 
         %td= Rule.find(bucket.rule).name
         %td= bucket.branch
-        %td= bucket.count
-        
-
+        /%td= bucket.count
+        /%td=link_to "#{bucket.count}", detail_path(:branch => bucket.branch)
         / %td= link_to "Look up #{rule.name}", rule_path(rule)
         / %td= link_to 'Add child rule', new_rule_path(:parent_id => rule)
+        %td=link_to "#{bucket.count}", detail_path(:rule => bucket.rule, :branch =>  "#{bucket.branch  ? "True":"False"}")
