@@ -70,7 +70,7 @@ class RulesController < ApplicationController
 		eval_sheet = book.worksheet("Tests")
 		eval_title_row = eval_sheet.row(0)		
 		flash[:notice] = "'#{@rule.excel}' successfully opened"
-		run_tickets = Ticket.take(2)   # eventually should be set by user
+		run_tickets = Ticket.all   # eventually should be set by user
 		run_tickets.each do |tix|
 			# col_number = 0
 			# #tix #so that it is in scope in the outer do loop
@@ -97,9 +97,9 @@ class RulesController < ApplicationController
 			#@rule_eval = tix[@rule.test]  #tix goes down the True or False branch
 			# find the branch corresponding to the evaluation
 			classification = classify(tix, @rule)
-			tix.branch =classification[:branch]
-			tix.rule = classification[:rule]
-			tix.save
+			# tix.branch =classification[:branch]
+			# tix.rule = classification[:rule]
+			#tix.save
 			
 		end
 
@@ -111,12 +111,45 @@ class RulesController < ApplicationController
 
 	def classify (tix, test_rule)
 		rule_eval = tix[test_rule.test] #evaluates to true or false
-		child_rule = test_rule.children.where( :branch => rule_eval).first #.first to get to actual rule rather than a Relation see http://stackoverflow.com/questions/4426441/rails-3-active-record-query-returns-activerecordrelation-object-instead-of-o
-		if child_rule
-			classification = classify(tix,child_rule)
+		child_rules = test_rule.children.where( :branch => rule_eval)
+		if child_rules.first #.first to get to actual rule rather than a Relation see http://stackoverflow.com/questions/4426441/rails-3-active-record-query-returns-activerecordrelation-object-instead-of-o
+			child_rules.each do |child_rule|
+				classification = classify(tix,child_rule)
+			end
 		else
-			{:branch=> rule_eval, :rule => test_rule.id}
+			# if rule_eval
+			# 	test_rule.count_positive += 1
+			# else
+			# 	test_rule.count_negative += 1
+			# end
+			#{:branch=> rule_eval, :rule => test_rule.id}
+			tix.branch = rule_eval
+			tix.rule = test_rule.id
+			tix.save
 		end
+	end
+
+	def count
+		id = params[:id] # retrieve rule ID from route
+		@rule = Rule.find(id)  #look up rule by unique ID
+		rules = Rule.all
+		rules.each do |rule| #reset count
+			rule.count_positive = 0
+			rule.count_negative = 0
+			rule.save
+		end
+
+		summary =Ticket.select('rule, branch, count(ticket) as count').group('rule', 'branch')
+		summary.each do |node_rule|
+			@node_rule = Rule.find(node_rule.rule)
+			if node_rule.branch==TRUE
+				@node_rule.count_positive = node_rule.count
+			else
+				@node_rule.count_negative = node_rule.count
+			end
+			@node_rule.save
+		end
+		redirect_to tree_path(@rule)
 	end
 
 

@@ -6,6 +6,8 @@
       / - else
       /   %th= trees.name
       %th= link_to "#{trees.name}", tree_path(trees)
+      %th= 'True'
+      %th= 'False'
 
   %tbody
     %tr
@@ -17,3 +19,7 @@
         =link_to 'Delete', trees , :confirm => "Are you sure?", :method => :delete
         |
         = link_to 'Add child', new_rule_path(:parent_id => trees)
+      %td
+        = "#{trees.count_positive} "
+      %td
+        = "#{trees.count_negative} "

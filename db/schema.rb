@@ -11,16 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150809131940) do
+ActiveRecord::Schema.define(version: 20150828053959) do
+
+  create_table "bins", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "rule",       limit: 4
+    t.boolean  "branch"
+    t.string   "ticket",     limit: 30
+    t.integer  "ticketID",   limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "rules", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.text     "excel",      limit: 65535
-    t.text     "test",       limit: 65535
+    t.string   "name",           limit: 255
+    t.text     "excel",          limit: 65535
+    t.text     "test",           limit: 65535
     t.boolean  "branch"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.string   "ancestry",   limit: 255
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "ancestry",       limit: 255
+    t.integer  "count_positive", limit: 4,     default: 0
+    t.integer  "count_negative", limit: 4,     default: 0
   end
 
   add_index "rules", ["ancestry"], name: "index_rules_on_ancestry", using: :btree

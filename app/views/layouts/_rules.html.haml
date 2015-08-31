@@ -5,6 +5,7 @@
       %th Parent Branch
       %th Excel File
       %th Test
+      %th Count
       / %th More Info
 
   %tbody
@@ -14,6 +15,7 @@
       %td= @rule.branch
       %td= @rule.excel
       %td= @rule.test
+      %td= @rule.count
     %tr
       %td= link_to 'Edit rule', edit_rule_path(@rule)
       %td=link_to 'Delete rule', @rule , :confirm => "Are you sure?", :method => :delete

@@ -1,0 +1,20 @@
+%h1 Ticket Classification Buckets
+%table#rules
+  %thead
+    %tr
+      %th Rule ID
+      %th Name
+      %th Branch
+      %th Count
+
+  %tbody
+    - @buckets.each do |bucket|
+      %tr
+        %td= bucket.rule 
+        %td= Rule.find(bucket.rule).name
+        %td= bucket.branch
+        %td= bucket.count
+        
+
+        / %td= link_to "Look up #{rule.name}", rule_path(rule)
+        / %td= link_to 'Add child rule', new_rule_path(:parent_id => rule)
