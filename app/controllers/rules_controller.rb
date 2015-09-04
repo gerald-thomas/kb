@@ -110,7 +110,8 @@ class RulesController < ApplicationController
 	end
 
 	def classify (tix, test_rule)
-		rule_eval = tix[test_rule.test] #evaluates to true or false
+		#rule_eval = tix[test_rule.test] #evaluates to true or false
+		rule_eval = tix.test.where("rule_id = ?", test_rule.id).first.result #evaluates to true or false
 		child_rules = test_rule.children.where( :branch => rule_eval)
 		if child_rules.first #.first to get to actual rule rather than a Relation see http://stackoverflow.com/questions/4426441/rails-3-active-record-query-returns-activerecordrelation-object-instead-of-o
 			child_rules.each do |child_rule|

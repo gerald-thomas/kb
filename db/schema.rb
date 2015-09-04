@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828053959) do
+ActiveRecord::Schema.define(version: 20150903120535) do
 
   create_table "bins", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -37,6 +37,17 @@ ActiveRecord::Schema.define(version: 20150828053959) do
 
   add_index "rules", ["ancestry"], name: "index_rules_on_ancestry", using: :btree
 
+  create_table "tests", force: :cascade do |t|
+    t.boolean  "result"
+    t.integer  "rule_id",    limit: 4
+    t.integer  "ticket_id",  limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "tests", ["rule_id"], name: "index_tests_on_rule_id", using: :btree
+  add_index "tests", ["ticket_id"], name: "index_tests_on_ticket_id", using: :btree
+
   create_table "tickets", force: :cascade do |t|
     t.string   "ticket",     limit: 255
     t.boolean  "test1"
@@ -53,6 +64,12 @@ ActiveRecord::Schema.define(version: 20150828053959) do
     t.integer  "rule",       limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "test_id",    limit: 4
   end
 
+  add_index "tickets", ["test_id"], name: "index_tickets_on_test_id", using: :btree
+
+  add_foreign_key "tests", "rules"
+  add_foreign_key "tests", "tickets"
+  add_foreign_key "tickets", "tests"
 end
