@@ -39,6 +39,7 @@ module Kb
     config.assets.precompile += %w( vendor/modernizr )
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{config.root}/app/builders/documents)
+    
 
 
     # Do not swallow errors in after_commit/after_rollback callbacks.

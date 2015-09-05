@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'ancestry'
 gem 'spreadsheet'
+gem 'pg'  #to support pre-compiling for production
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
@@ -31,11 +32,10 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
-  gem 'pg' #to support precompiling assets
+  
 end
 group :production do
   gem 'rails_12factor'
-  gem 'pg' #use PostgresSQL in production
 end
 group :test do
   gem 'capybara'
